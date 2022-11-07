@@ -31,6 +31,7 @@ db.refreshToken = require("./refreshToken.model.js")(
   Sequelize
 );
 db.doc_inspection = require("./doc_inspection.model.js")(sequelize, Sequelize);
+db.daily_report = require("./daily_report.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.job = require("./job.model.js")(sequelize, Sequelize);
 db.job_class = require("./job_class.model.js")(sequelize, Sequelize);
@@ -68,9 +69,9 @@ db.schedule_qc_excel = require("./schedule_qc_excel.model.js")(
   Sequelize
 );
 db.iqc_history = require("./iqc_history.model.js")(sequelize, Sequelize);
+db.outgoing = require("./outgoing.model.js")(sequelize, Sequelize);
 
-
-
+db.outgoing.belongsTo(db.user, { foreignKey: "user_id" });
 
 db.role.belongsToMany(db.user, {
     through: "user_roles",

@@ -22,6 +22,7 @@ exports.download = (req, res) => {
         id: obj.id,
         tools_type_name: obj.tools_type.name,
         name: obj.name,
+        code: obj.code,
         expired_date: obj.expired_date,
         createdAt: obj.createdAt,
         updatedAt: obj.updatedAt,
@@ -36,6 +37,7 @@ exports.download = (req, res) => {
       { header: "Id", key: "id", width: 10 },
       { header: "Type", key: "tools_type_name", width: 10 },
       { header: "Name", key: "name", width: 10 },
+      { header: "Code", key: "code", width: 10 },
       { header: "Expired Date", key: "expired_date", width: 10 },
       { header: "CreatedAt", key: "createdAt", width: 10 },
       { header: "UpdatedAt", key: "updatedAt", width: 10 },
@@ -72,6 +74,7 @@ exports.create = (req, res) => {
   // Create a Tools
   const tools = {
     name: req.body.name,
+    code: req.body.code,
     qty: req.body.qty,
     tools_type_id: req.body.tools_type_id
   };
@@ -235,6 +238,37 @@ exports.findAllPublished = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving toolses.",
+      });
+    });
+};
+
+exports.findOneByCode = (req, res) => {
+  const code = req.params.code;
+
+  Tools.findOne({
+    where: {
+      code: code,
+    },
+    include: [
+      {
+        model: tools_type,
+        as: "tools_type",
+        attributes: ["id", "name"],
+      },
+    ],
+  })
+    .then((data) => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Cannot find Tools with id=${id}.`,
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error retrieving Tools with id=" + id,
       });
     });
 };

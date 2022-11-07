@@ -28,7 +28,7 @@ db.sequelize.sync();
 /* db.sequelize.sync({ force: true }).then( async () => {
     console.log("Drop and re-sync db.");
     initial();
-});  */
+});   */
 
 const initial = async () => {
   const Role = db.role;
@@ -287,6 +287,8 @@ require("./app/routes/report_wm_check.routes")(app);
 require("./app/routes/schedule_qc.routes")(app);
 require("./app/routes/schedule_qc_excel.routes")(app);
 require("./app/routes/iqc_history.routes")(app);
+require("./app/routes/daily_report.routes")(app);
+require("./app/routes/outgoing.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 9080;

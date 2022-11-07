@@ -39,5 +39,7 @@ module.exports = (app) => {
     tools.deleteAll
   );
 
+  router.get("/code/:code", [authJwt.verifyToken], tools.findOneByCode);
+
   app.use("/api/tools", router);
 };

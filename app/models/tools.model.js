@@ -5,6 +5,9 @@ module.exports = (sequelize, Sequelize) => {
       name: {
         type: Sequelize.STRING,
       },
+      code: {
+        type: Sequelize.STRING,
+      },
       qty: {
         type: Sequelize.INTEGER,
       },
